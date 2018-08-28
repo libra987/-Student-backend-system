@@ -1,0 +1,21 @@
+{
+  "name": "Student-backend-system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"nodemon ./src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/libra987/-Student-backend-system.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/libra987/-Student-backend-system/issues"
+  },
+  "homepage": "https://github.com/libra987/-Student-backend-system#readme"
+}
