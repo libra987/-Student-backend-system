@@ -2,6 +2,7 @@
 const express = require("express")
 const path = require("path")
 
+
 //2.创建路由对象
 const accountRouter = express.Router();
 
@@ -13,6 +14,9 @@ const accountCTRL = require(path.join(__dirname, "../controllers/accountControll
 accountRouter.get('/login', accountCTRL.getLoginPage)
 //  4.2获取注册页面的请求
 accountRouter.get('/register', accountCTRL.getRegisterPage)
+//  4.3处理注册请求
+accountRouter.post('/register',accountCTRL.register)
+
 
 //5.导出
 module.exports = accountRouter;

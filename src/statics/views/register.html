@@ -5,6 +5,7 @@
     <title>欢迎注册</title>
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.10.0/js/md5.min.js"></script>
 </head>
 
 <body>
@@ -38,4 +39,27 @@
         </div>
     </div>
 </body>
+
 </html>
+<script>
+    function register() {
+        //1.获取用户输入的用户名和密码
+        const username = $('#usernameId').val();
+        const password = md5($('#passwordId').val() + "!@Z-_-");//用md5加密 加盐
+
+        console.log("输入的用户名密码:" + username, password);
+        $.post(
+            "/account/register",
+            { username, password },
+            function (result) {
+                console.log(result);
+                
+                if (result.status !== 0) {
+                    alert(result.message)
+                } else {//跳转登录页面
+                    window.location.href = '/account/login'
+                }
+            })
+    }
+
+</script>
