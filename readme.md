@@ -189,8 +189,23 @@ xtpl.renderFile('url',{
 		
 		3、响应数据（html里面包含js脚本）给浏览器，让浏览器执行一些操作
 
-
-
+### 完成修改页面
+获取修改页面
+	params传参
+	
+	浏览器端
+		发送求 
+		http://127.0.0.1:3000/studentmanager/edit/5b8643af36c9ad1a6a9ea78b
+		
+	后台
+		router 中处理请求的时候	xxx/:变量名称
+		controller 获取 req.params.变量名称
+		
+		id值需要经过ObjectId封装
+		
+		要整一个修改页面
+点击修改的时候,获得选中对象的id,连接数据库,查找对应id的信息渲染到页面中
+点击保存到时候,获得用户输入的信息,连接数据库,添加到时数据库中
 
 
 
