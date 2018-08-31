@@ -133,6 +133,11 @@
 ```
 2.xtpl 渲染
 ```js
+/*
+* 参数1：要渲染的页面的路径，最终找到list.html是根据绝对路径去找
+* 参数2：渲染页面所需要的数据
+* 参数3：渲染完毕之后的回调
+*/
 var xtpl = require('xtpl');
 xtpl.renderFile('url',{
 	x:1
@@ -141,7 +146,14 @@ xtpl.renderFile('url',{
 });
 ```
 ####2.动态渲染数据
-
+```txt
+	1.连接数据库,查出所有数据
+	2.利用Xtemplate的循环语法写模板语法
+		{{#each(array)}}
+		    {{xindex}} {{this.name}}
+		{{/each}}
+	3.用xtpl.rendFile()渲染模板
+```
 
 
 
