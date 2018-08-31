@@ -50,3 +50,10 @@
     </div>
 </div>
 {{/block}}
+<script>
+    function search(){
+        //1.点击查找,发送请求,获得用户输入的关键词,去数据库中查找
+        window.location.href =`/studentmanager/list?keyword=${$('#studentNameId').val()}`;
+    }
+
+</script>
