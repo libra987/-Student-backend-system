@@ -17,8 +17,10 @@ app.use(session({ secret: 'keyboard cat', resave: true, saveUninitialized: false
 //3.集成路由(先导再用)
 //router 分开请求,不把所有的请求都怼在入口函数中
 const accountRouter = require(path.join(__dirname, "/routers/accountRouter.js"))
+const studentmanagerRouter =require(path.join(__dirname,"/routers/studentmanagerRouter.js"))
 //app.use相当于一个入口函数
 app.use("/account", accountRouter)
+app.use('/studentmanager',studentmanagerRouter)
 
 
 //4.开启web服务

@@ -81,6 +81,8 @@
             if (result.status != 0) {//如果验证不成功,刷新验证码并提示
                 $(this).attr('src', `/account/vcode?randomid=${Math.random()}`);
                 alert(result.message);
+            }else{
+                window.location.href="/studentmanager/list"
             }
         })
     }
