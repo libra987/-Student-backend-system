@@ -106,6 +106,59 @@
 #### 3.完成登录功能
 
 
+
+### 五.利用模板显示列表页
+####1.利用xtemplate的继承模板,渲染页面
+	xtemplate  
+	父模板
+```js	
+<!doctype html>
+<html>
+    <head>
+        <meta name="charset" content="utf-8" />
+        <title>{{title}}</title>
+        {{{block ("head")}}}
+    </head>
+    <body>
+        {{{block ("body")}}}
+    </body>
+</html>
+```
+	子模板
+```js	
+{{extend ("./parent")}}
+{{#block ("body")}}
+    <h2>{{title}}</h2>
+{{/block}}
+```
+2.xtpl 渲染
+```js
+var xtpl = require('xtpl');
+xtpl.renderFile('url',{
+	x:1
+},function(error,content){
+	//content是字符串,是子模板html的内容
+});
+```
+####2.动态渲染数据
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 操作数据库,增删改查开始
 当用户填好信息,点击登录的时候
 1.拿到用户注册时输入用户名 发送请求 查看是否已经存在
