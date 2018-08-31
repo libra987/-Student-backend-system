@@ -1,13 +1,9 @@
 //1.导入模块
 const path = require("path")
 const captchapng = require('captchapng');
-//连接数据库
-const MongoClient = require('mongodb').MongoClient;
-// Connection URL
-const url = 'mongodb://localhost:27017';
-// Database Name
-const dbName = 'szhmqd21';
 
+const databasetool = require(path.join(__dirname, "../tools/databasetool.js"))
+// databasetool.findOne("accountInfo",{ username: req.body.username },callback)
 
 
 /*
@@ -36,19 +32,12 @@ exports.register = (req, res) => {
 
     //1.去数据库中查询，用户民是否已经存在，如果已经存在，则返回用户名存在给浏览器
     // Use connect method to connect to the server
-    MongoClient.connect(url, { useNewUrlParser: true }, function (err, client) {
-        // 拿到了数据操作的db对象
-        const db = client.db(dbName);
-        // 拿到集合
-        const collection = db.collection("accountInfo");
-        // 先根据用户名查询
-        // console.log(collection);
-
-        collection.findOne({ username: req.body.username }, (err, doc) => {
+    databasetool.findOne(
+        "accountInfo",
+        { username: req.body.username },
+        (err, doc) => {
             if (doc) {
                 //用户名存在
-                // 关掉和数据库的连接
-                client.close();
                 // 更改返回的状态
                 result.status = 1;
                 result.message = "用户名已经存在";
@@ -57,20 +46,24 @@ exports.register = (req, res) => {
             } else {
                 //用户名不存在
                 //2.如果用户名不存在，则先要把我们的数据插入到数据库中，然后返回注册成功给浏览器
-                collection.insertOne(req.body, (err, result2) => {
-                    // 关掉和数据库的连接
-                    client.close();
-                    if (result2 == null) {
-                        //失败
-                        result.status = 2;
-                        result.message = "注册失败";
+                databasetool.insertOne(
+                    "accountInfo",
+                    req.body,
+                    (err, result2) => {
+                        // 关掉和数据库的连接
+                        if (result2 == null) {
+                            //失败
+                            result.status = 2;
+                            result.message = "注册失败";
+                        }
+                        res.json(result);
                     }
-                    res.json(result);
-                });
+                )
             }
-        });
-    }
-    );
+        }
+    )
+
+
 };
 
 /*
@@ -97,17 +90,28 @@ exports.getVcodeImage = (req, res) => {
  * 最终处理，登录处理
  */
 exports.login = (req, res) => {
-    const result = { status: 0, message: "登录成功" }
-    // 判断:用户输入的验证码与系统生成的验证码是否一致
-    // console.log(req.body.vcode);
-    // console.log(req.session.vcode);
+    const result = { status: 0, message: "登录成功" };
 
+    // 校验验证码
     if (req.body.vcode != req.session.vcode) {
         result.status = 1;
-        result.message = "验证码不正确"
+        result.message = "验证码不正确";
 
-        res.json(result)
+        res.json(result);
         return;
     }
-    res.json(result);
-}
+
+    // 去数据库中，使用username & password 去校验
+    databasetool.findOne(
+        "accountInfo",
+        { username: req.body.username, password: req.body.password },
+        (err, doc) => {
+            if (doc == null) {
+                result.status = 2;
+                result.message = "用户名或密码错误";
+            }
+
+            res.json(result);
+        }
+    );
+};
