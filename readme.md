@@ -227,9 +227,13 @@ xtpl.renderFile('url',{
 
 (难点,用parmas传参,需要用到db的objectID)
 
-
-
-
+### 完成删除操作
+浏览器
+	给删除绑定点击事件,判断(confirm)
+后台
+	1.获得用户id
+	2.连接数据库
+	3.做删除操作
 
 
 

@@ -66,12 +66,30 @@ exports.getEditStudentPage = (req, res) => {
 /**
  * 最终处理，根据id修改学生信息
  */
-exports.editStudent =(req,res)=>{
-    databasetool.updateOne("studentInfo",{ _id: databasetool.ObjectId(req.params.studentId)},req.body,(err,result)=>{
-        if(result ==null){
+exports.editStudent = (req, res) => {
+    databasetool.updateOne("studentInfo", { _id: databasetool.ObjectId(req.params.studentId) }, req.body, (err, result) => {
+        if (result == null) {
             res.send(`<script>alert("修改失败!");</script>`);
-        }else{
+        } else {
             res.send(`<script>window.location.href='/studentmanager/list'</script>`)
         }
     })
+}
+
+/**
+ * 最终处理，根据id删除数据
+ */
+exports.deleteStudent = (req, res) => {
+    databasetool.deleteOne(
+        "studentInfo",
+        { _id: databasetool.ObjectId(req.params.studentId) },
+        (err, result) => {
+            if (result == null) {
+                res.send(`<script>alert("删除失败!");</script>`);
+            } else {
+                res.send(`<script>window.location.href='/studentmanager/list'</script>`)
+                // res.send(`<script>alert("删除成功");</script>`);
+            }
+        }
+    )
 }

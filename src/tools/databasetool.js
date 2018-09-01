@@ -96,3 +96,20 @@ exports.updateOne = (collectionName, condition, params, callback) => {
         });
     })
 }
+
+/**
+ * 暴露给控制器用的，新增一个的方法
+ * @param {*} collectionName 集合名称
+ * @param {*} params 参数对象
+ * @param {*} callback 回调函数
+ */
+exports.deleteOne = (collectionName, params, callback) => {
+
+    connectDB(collectionName, (err, client, collection) => {
+        //连接数据库,根据条件查询
+        collection.deleteOne(params, (err, result) => {
+            client.close();
+            callback(err, result)
+        });
+    })
+}
